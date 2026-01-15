@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-app
+  namespace: argocd
+spec:
+  project: default
+  
+  # Source: Git repository containing Kubernetes manifests
+  source:
+    repoURL: https://github.com/benitdecry/argocd-projec.git
+    targetRevision: main
+    path: k8-manifests
+  
+  # Destination: Kubernetes cluster and namespace
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  
+  # Sync policy: automated sync and self-healing
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m
