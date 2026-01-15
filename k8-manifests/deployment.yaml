@@ -12,6 +12,8 @@ spec:
       labels:
         app: python
     spec:
+      imagePullSecrets:
+      - name: acr-secret
       containers:
       - name: python
         image: demopythonacr123.azurecr.io/python-app:latest
