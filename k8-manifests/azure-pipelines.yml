@@ -1,0 +1,15 @@
+trigger:
+- main
+ 
+pool:
+  name: arocd-pool
+ 
+steps:
+- task: Docker@2
+  inputs:
+    containerRegistry: 'aroc-sc'
+    repository: 'python-app'
+    command: buildAndPush
+    Dockerfile: Dockerfile
+    tags: |
+      latest
